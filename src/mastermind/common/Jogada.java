@@ -22,8 +22,12 @@ public class Jogada implements Serializable, Enviavel {
 	}
 	
 	public Jogada() {
-		linha = new Cores[4];
-		feedback = new Cores[4];
+		linha = new Cores[] {
+				Cores.VAZIO, Cores.VAZIO, Cores.VAZIO, Cores.VAZIO
+		};
+		feedback = new Cores[] {
+				Cores.VAZIO, Cores.VAZIO, Cores.VAZIO, Cores.VAZIO
+		};
 	}
 
 	public Jogada(String remetente) {

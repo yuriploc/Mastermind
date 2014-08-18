@@ -3,8 +3,9 @@
 .project
 # Vim backup files
 *~
-# bin project folder
+# bin project folder and javafx build
 bin/*
+build.*
 
 # Java Package Files #
 *.jar

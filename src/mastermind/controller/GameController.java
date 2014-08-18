@@ -11,9 +11,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -48,9 +46,6 @@ public class GameController {
 	private Text txtCorRepetida;
 
 	@FXML
-	private TilePane tileLinhaFeedback;
-	
-	@FXML
 	private VBox vBoxLinhasFeed;
 
 	private int linhaEmJogo = 9;
@@ -62,7 +57,7 @@ public class GameController {
 	private int circuloDaVez;
 
 	private HBox linhaDaVez;
-	
+
 	private FlowPane feedDaVez;
 
 	private static GameController gc;
@@ -110,16 +105,19 @@ public class GameController {
 			@Override
 			public void handle(ActionEvent arg0) {
 
-				for (int i = 0; i < tileLinhaFeedback.getChildren().size(); i++) {
-					Color color = (Color) ((Circle) tileLinhaFeedback.getChildren().get(i)).getFill();
+				for (int i = 0; i < feedDaVez.getChildren().size(); i++) {
+					Color color = (Color) ((Circle) feedDaVez.getChildren().get(i)).getFill();
 					jogada.getFeedback()[i] = getCor(color);
 				}
-				
+
 				Handler.getHandler().enviaMsg(jogada);
-				--linhaEmJogo;
-				linhaDaVez = (HBox) vBoxLinhasCores.getChildren().get(linhaEmJogo);
-				feedDaVez = (FlowPane) vBoxLinhasFeed.getChildren().get(linhaEmJogo);
-				jogada = new Jogada();
+				if(--linhaEmJogo >= 0) {
+					linhaDaVez = (HBox) vBoxLinhasCores.getChildren().get(linhaEmJogo);
+					feedDaVez = (FlowPane) vBoxLinhasFeed.getChildren().get(linhaEmJogo+1);
+					jogada = new Jogada();
+				} //else fim de jogo
+
+				circuloDaVez = 0;
 			}
 
 		});
@@ -131,10 +129,11 @@ public class GameController {
 					Circle c = (Circle) n;
 					c.setFill(Color.DARKGRAY);
 				}
-				for (Node n : tileLinhaFeedback.getChildren()) {
+				for (Node n : feedDaVez.getChildren()) {
 					Circle c = (Circle) n;
 					c.setFill(Color.DARKGRAY);
 				}
+				jogada = new Jogada();
 				circuloDaVez = 0;
 			}
 
@@ -143,32 +142,24 @@ public class GameController {
 
 	@FXML
 	public void mouseReleased(MouseEvent me) {
-		Color cor = null;
-		Circle c = null;
 
-		/* Se circuloDaVez == 0, primeira jogada da linha
-		 * Se circuloDaVez entre 1 e 3, verifica se cor já foi usada
-		 */ 
-		if(circuloDaVez < 4) {
-			c = (Circle) linhaDaVez.getChildren().get(circuloDaVez);
-			cor = (Color) ((Circle)me.getSource()).getFill();
-		}
+		Circle c = (Circle) linhaDaVez.getChildren().get(circuloDaVez);
+		Color cor = (Color) ((Circle)me.getSource()).getFill();
 
-		if(circuloDaVez == 0) {
-			jogada.getLinha()[circuloDaVez++] = getCor(cor);
-			c.setFill(cor);
-		}
-		else if(circuloDaVez < 4 && circuloDaVez > 0) {
-			for(int i = 0; i < circuloDaVez; i++) {
-				if(getCor(cor).toString().equalsIgnoreCase(jogada.getLinha()[i].toString())) {
-					System.out.println("COR JÁ JOGADA");
-					//					txtCorRepetida.setVisible(true);
-					return;
-				}
+		for(int i = 0; i < jogada.getLinha().length; i++) {
+			if(getCor(cor).toString().equalsIgnoreCase(jogada.getLinha()[i].toString())) {
+				txtCorRepetida.setVisible(true); // cor já jogada
+				return;
 			}
-			jogada.getLinha()[circuloDaVez++] = getCor(cor);
-			c.setFill(cor);
+			else if(txtCorRepetida.isVisible()) 
+				txtCorRepetida.setVisible(false);
 		}
+		jogada.getLinha()[circuloDaVez] = getCor(cor);
+		c.setFill(cor);
+		++circuloDaVez;
+
+		if(circuloDaVez >= 4)
+			circuloDaVez = 0;
 
 	}
 
@@ -206,7 +197,7 @@ public class GameController {
 		else if(cor == Cores.VERDE)
 			return Color.GREEN;
 		else if(cor == Cores.AZUL)
-			return Color.BLUE;
+			return Color.DODGERBLUE;
 		else if(cor == Cores.ROSA)
 			return Color.PINK;
 		else if(cor == Cores.ROXO)

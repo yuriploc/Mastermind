@@ -4,11 +4,13 @@ import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.concurrent.Task;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Dialogs;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import mastermind.common.Chat;
 import mastermind.common.Enviavel;
 import mastermind.common.Jogada;
@@ -42,6 +44,15 @@ public class Mastermind extends Application {
 		}
 
 		primaryStage.setScene(new Scene(rootLayout));
+		primaryStage.setResizable(false);
+		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			
+			@Override
+			public void handle(WindowEvent arg0) {
+				System.out.println("encerrando pelo botão X...");
+				System.exit(1);
+			}
+		});
 
 		String nome = Dialogs.showInputDialog(this.primaryStage, "Digite seu nome:", "ATENÇÃO", "Mensagem do servidor");
 		//inicia conexao com server e manda nome do usuario
