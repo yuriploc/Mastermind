@@ -99,7 +99,7 @@ public class GameController {
 
 			@Override
 			public void handle(ActionEvent arg0) {
-				HBox hBox = (HBox) vBoxLinhasCores.getChildren().get(linhaEmJogo--);
+				HBox hBox = (HBox) vBoxLinhasCores.getChildren().get(linhaEmJogo);
 				for(Node n : hBox.getChildren()) {
 					Circle c = (Circle) n;
 					c.setFill(Color.DARKGRAY);
