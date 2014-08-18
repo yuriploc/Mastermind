@@ -21,7 +21,6 @@ public class Mastermind extends Application {
 	private Stage primaryStage;
 	private FXMLLoader loader = null;
 	private BorderPane rootLayout;
-	private boolean firstUser = false;
 
 	public Mastermind() {
 	}
@@ -58,10 +57,9 @@ public class Mastermind extends Application {
 		//inicia conexao com server, manda nome do usuario
 		Handler.getHandler().enviaStr(nome);
 		//verifica se é o primeiro usuario a conectar e avisa ao controller
-		firstUser = Handler.getHandler().isFirstUser();
-		if(firstUser)
+		boolean first = Handler.getHandler().isFirstUser();
+		if(first)
 			GameController.setFirstUser();
-		
 		//TODO: ajeitar essa porra
 		@SuppressWarnings("rawtypes")
 		Task task = new Task() {

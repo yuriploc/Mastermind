@@ -62,17 +62,11 @@ public final class Handler {
 
 	public boolean isFirstUser() {
 		boolean is = false;
-		enviaStr("#first#");
 		try {
-			Object o = objInStream.readObject();
-			if(o instanceof String) {
-				String str = (String) o;
-				if(str.equalsIgnoreCase("#fisrt#"))
-					is = true;
-			}
-			System.out.println("boolean " + is);
-		} catch (ClassNotFoundException | IOException e) {
+			is = objInStream.readBoolean();
+		} catch (IOException e) {
 			e.printStackTrace();
+			return false;
 		}
 		return is;
 	}
