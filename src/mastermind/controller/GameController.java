@@ -54,7 +54,7 @@ public class GameController {
 
 	private Jogada jogada;
 
-	private int circuloDaVez;
+	private int circuloDaVez = 0;
 
 	private HBox linhaDaVez;
 
@@ -69,9 +69,8 @@ public class GameController {
 	@FXML
 	private void initialize() {
 		jogada = new Jogada();
-		circuloDaVez = 0;
-		linhaDaVez = (HBox) vBoxLinhasCores.getChildren().get(linhaEmJogo);
 		feedDaVez = (FlowPane) vBoxLinhasFeed.getChildren().get(linhaEmJogo);
+		linhaDaVez = (HBox) vBoxLinhasCores.getChildren().get(linhaEmJogo);
 
 
 		btnEnviar.setOnAction(new EventHandler<ActionEvent>() {
@@ -111,9 +110,10 @@ public class GameController {
 				}
 
 				Handler.getHandler().enviaMsg(jogada);
-				if(--linhaEmJogo >= 0) {
+				--linhaEmJogo;
+				if(linhaEmJogo >= 0) {
+					feedDaVez = (FlowPane) vBoxLinhasFeed.getChildren().get((linhaEmJogo + 1));
 					linhaDaVez = (HBox) vBoxLinhasCores.getChildren().get(linhaEmJogo);
-					feedDaVez = (FlowPane) vBoxLinhasFeed.getChildren().get(linhaEmJogo+1);
 					jogada = new Jogada();
 				} //else fim de jogo
 
@@ -129,6 +129,7 @@ public class GameController {
 					Circle c = (Circle) n;
 					c.setFill(Color.DARKGRAY);
 				}
+				
 				for (Node n : feedDaVez.getChildren()) {
 					Circle c = (Circle) n;
 					c.setFill(Color.DARKGRAY);
