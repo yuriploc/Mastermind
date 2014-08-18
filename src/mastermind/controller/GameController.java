@@ -20,7 +20,7 @@ import javafx.scene.text.Text;
 import mastermind.common.Chat;
 import mastermind.common.Jogada;
 import mastermind.common.Jogada.Cores;
-import cliente.Handler;
+import mastermind.connection.Handler;
 
 public class GameController {
 
@@ -59,6 +59,8 @@ public class GameController {
 	private HBox linhaDaVez;
 
 	private FlowPane feedDaVez;
+	
+	private static boolean firstUser = false;
 
 	private static GameController gc;
 
@@ -104,6 +106,7 @@ public class GameController {
 			@Override
 			public void handle(ActionEvent arg0) {
 
+				feedDaVez = (FlowPane) vBoxLinhasFeed.getChildren().get(linhaEmJogo);
 				for (int i = 0; i < feedDaVez.getChildren().size(); i++) {
 					Color color = (Color) ((Circle) feedDaVez.getChildren().get(i)).getFill();
 					jogada.getFeedback()[i] = getCor(color);
@@ -112,7 +115,6 @@ public class GameController {
 				Handler.getHandler().enviaMsg(jogada);
 				--linhaEmJogo;
 				if(linhaEmJogo >= 0) {
-					feedDaVez = (FlowPane) vBoxLinhasFeed.getChildren().get((linhaEmJogo + 1));
 					linhaDaVez = (HBox) vBoxLinhasCores.getChildren().get(linhaEmJogo);
 					jogada = new Jogada();
 				} //else fim de jogo
@@ -137,7 +139,7 @@ public class GameController {
 				jogada = new Jogada();
 				circuloDaVez = 0;
 			}
-
+			
 		});
 	}
 
@@ -150,6 +152,7 @@ public class GameController {
 		for(int i = 0; i < jogada.getLinha().length; i++) {
 			if(getCor(cor).toString().equalsIgnoreCase(jogada.getLinha()[i].toString())) {
 				txtCorRepetida.setVisible(true); // cor já jogada
+				me.consume();
 				return;
 			}
 			else if(txtCorRepetida.isVisible()) 
@@ -161,18 +164,28 @@ public class GameController {
 
 		if(circuloDaVez >= 4)
 			circuloDaVez = 0;
-
+		me.consume();
+		
 	}
 
 	@FXML
 	public void mousePressed(MouseEvent me) {
 		Circle circle = (Circle) me.getSource();
-		if(circle.getFill() == Color.DARKGRAY)
-			circle.setFill(Color.WHITE);
-		else if(circle.getFill() == Color.WHITE)
-			circle.setFill(Color.BLACK);
-		else if(circle.getFill() == Color.BLACK)
-			circle.setFill(Color.DARKGRAY);
+		feedDaVez = (FlowPane) vBoxLinhasFeed.getChildren().get(linhaEmJogo);
+		for (Node n : feedDaVez.getChildren()) {
+			Circle c = (Circle) n;
+			if(c.equals(circle)) {
+				if(circle.getFill() == Color.DARKGRAY)
+					circle.setFill(Color.WHITE);
+				else if(circle.getFill() == Color.WHITE)
+					circle.setFill(Color.BLACK);
+				else if(circle.getFill() == Color.BLACK)
+					circle.setFill(Color.DARKGRAY);
+				me.consume();
+			}
+		}
+		me.consume();
+		
 	}
 
 	public static void updateTxtAreaChat(String str) {
@@ -183,6 +196,9 @@ public class GameController {
 		for(int i = 0; i < j.getLinha().length; i++) {
 			( (Circle) gc.linhaDaVez.getChildren().get(i) ).setFill(getEnglishColor( j.getLinha()[i] ));
 		}
+		if(gc.linhaEmJogo < 9) {
+			gc.feedDaVez = (FlowPane) gc.vBoxLinhasFeed.getChildren().get(gc.linhaEmJogo+1);
+		} else gc.feedDaVez = (FlowPane) gc.vBoxLinhasFeed.getChildren().get(gc.linhaEmJogo);
 		for(int i = 0; i < j.getFeedback().length; i++) {
 			( (Circle) gc.feedDaVez.getChildren().get(i) ).setFill(getEnglishColor( j.getFeedback()[i] ));
 		}
@@ -232,6 +248,10 @@ public class GameController {
 			return Cores.PRETO;
 		else
 			return Cores.VAZIO;
+	}
+
+	public static void setFirstUser() {
+		firstUser = true;
 	}
 
 }

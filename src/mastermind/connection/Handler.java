@@ -1,5 +1,6 @@
-package cliente;
+package mastermind.connection;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -20,7 +21,7 @@ public final class Handler {
 			handler = new Handler();
 		return handler;
 	}
-	
+
 	private Handler() {
 		try {
 			socket = new Socket("localhost", 2333);
@@ -30,13 +31,13 @@ public final class Handler {
 
 	}
 
-	public void enviaNome(String msg) {
+	public void enviaStr(String msg) {
 		try {
 			objOutStream.writeObject(msg);
 			objOutStream.flush();
 		} catch(Exception e) { System.out.println(e+" --> pau no enviaNome do handler"); }
 	}
-	
+
 	public void enviaMsg(Enviavel env) {
 		try {
 			objOutStream.writeObject(env);
@@ -58,5 +59,22 @@ public final class Handler {
 		} catch(Exception e) { System.out.println(e); }
 		return null;
 	}
-	
+
+	public boolean isFirstUser() {
+		boolean is = false;
+		enviaStr("#first#");
+		try {
+			Object o = objInStream.readObject();
+			if(o instanceof String) {
+				String str = (String) o;
+				if(str.equalsIgnoreCase("#fisrt#"))
+					is = true;
+			}
+			System.out.println("boolean " + is);
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+		}
+		return is;
+	}
+
 }

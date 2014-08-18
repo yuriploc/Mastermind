@@ -14,13 +14,14 @@ import javafx.stage.WindowEvent;
 import mastermind.common.Chat;
 import mastermind.common.Enviavel;
 import mastermind.common.Jogada;
+import mastermind.connection.Handler;
 import mastermind.controller.GameController;
-import cliente.Handler;
 
 public class Mastermind extends Application {
 	private Stage primaryStage;
 	private FXMLLoader loader = null;
 	private BorderPane rootLayout;
+	private boolean firstUser = false;
 
 	public Mastermind() {
 	}
@@ -49,15 +50,18 @@ public class Mastermind extends Application {
 			
 			@Override
 			public void handle(WindowEvent arg0) {
-				System.out.println("encerrando pelo botão X...");
 				System.exit(1);
 			}
 		});
 
 		String nome = Dialogs.showInputDialog(this.primaryStage, "Digite seu nome:", "ATENÇÃO", "Mensagem do servidor");
-		//inicia conexao com server e manda nome do usuario
-		Handler.getHandler().enviaNome(nome);
-
+		//inicia conexao com server, manda nome do usuario
+		Handler.getHandler().enviaStr(nome);
+		//verifica se é o primeiro usuario a conectar e avisa ao controller
+		firstUser = Handler.getHandler().isFirstUser();
+		if(firstUser)
+			GameController.setFirstUser();
+		
 		//TODO: ajeitar essa porra
 		@SuppressWarnings("rawtypes")
 		Task task = new Task() {
