@@ -34,14 +34,14 @@ public final class Handler {
 		try {
 			objOutStream.writeObject(msg);
 			objOutStream.flush();
-		} catch(Exception e) { System.out.println(e+" --> pau no enviamsg do handler"); }
+		} catch(Exception e) { System.out.println(e+" --> pau no enviaNome do handler"); }
 	}
 	
 	public void enviaMsg(Enviavel env) {
 		try {
 			objOutStream.writeObject(env);
 			objOutStream.flush();
-		} catch(Exception e) { System.out.println(e+" --> pau no enviamsg do handler"); }
+		} catch(Exception e) { System.out.println(e+" --> pau no enviaMsg do handler"); }
 	}
 
 	public Enviavel esperaMsg(){

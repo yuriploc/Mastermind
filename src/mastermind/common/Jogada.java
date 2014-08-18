@@ -23,6 +23,7 @@ public class Jogada implements Serializable, Enviavel {
 	
 	public Jogada() {
 		linha = new Cores[4];
+		feedback = new Cores[4];
 	}
 
 	public Jogada(String remetente) {
@@ -44,6 +45,10 @@ public class Jogada implements Serializable, Enviavel {
 	@Override
 	public void setRemetente(String str) {
 		remetente = str;
+	}
+	
+	public Cores[] getFeedback() {
+		return feedback;
 	}
 
 }

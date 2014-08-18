@@ -16,7 +16,6 @@ import mastermind.controller.GameController;
 import cliente.Handler;
 
 public class Mastermind extends Application {
-	//azul, amarelo, verde, rosa, roxo, laranja.. bl, yl, gr, pk, pr, or
 	private Stage primaryStage;
 	private FXMLLoader loader = null;
 	private BorderPane rootLayout;
@@ -61,11 +60,7 @@ public class Mastermind extends Application {
 					}
 					else if(e instanceof Jogada) {
 						Jogada j = (Jogada) e;
-						//TODO: update da GUI
-						for(int i = 0; i < j.getLinha().length; i++) {
-							System.out.print(j.getLinha()[i].toString() + " ");
-						}
-						System.out.println("");
+						GameController.updateJogo(j);
 					}
 				}
 			}
