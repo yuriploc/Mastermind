@@ -366,7 +366,7 @@
             </TilePane>
             <FlowPane id="paneBotoesJogar" prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Button id="btnLimpar" mnemonicParsing="false" text="Limpar" wrapText="true" />
+                  <Button id="btnLimpar" fx:id="btnLimpar" mnemonicParsing="false" text="Limpar" wrapText="true" />
                   <Button id="btnJogar" fx:id="btnJogar" mnemonicParsing="false" text="Jogar" />
                </children>
             </FlowPane>

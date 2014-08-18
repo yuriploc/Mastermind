@@ -35,13 +35,16 @@ public class GameController {
 
 	@FXML // fx:id="txtAreaChat"
 	private TextArea txtAreaChat;
+	
+	@FXML
+	private Button btnLimpar;
 
 	private int linhaEmJogo = 9;
 
 	private String txtField = "";
 
 	private Jogada jogada;
-	
+
 	private int circuloDaVez;
 
 	private static GameController gc;
@@ -92,6 +95,19 @@ public class GameController {
 			}
 
 		});
+		btnLimpar.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				HBox hBox = (HBox) vBoxLinhasCores.getChildren().get(linhaEmJogo--);
+				for(Node n : hBox.getChildren()) {
+					Circle c = (Circle) n;
+					c.setFill(Color.DARKGRAY);
+				}
+				circuloDaVez = 0;
+			}
+			
+		});
 	}
 
 	private Cores getCor(Color cor) {
@@ -117,26 +133,35 @@ public class GameController {
 
 	@FXML
 	public void mouseReleased(MouseEvent me) {
-
+		Color cor = null;
+		Circle c = null;
 		HBox hBox = (HBox) vBoxLinhasCores.getChildren().get(linhaEmJogo);
 		System.out.println("mouse released");
 		
-		if(circuloDaVez < 4 && circuloDaVez > 0) {
-			Circle c = (Circle) hBox.getChildren().get(circuloDaVez);
-			Color cor = (Color) ((Circle)me.getSource()).getFill();
-			for(int i = 0; i < jogada.getLinha().length; i++) {
-				if(getCor(cor).toString().equalsIgnoreCase(jogada.getLinha()[i].toString())){
+		/* Se circuloDaVez == 0, primeira jogada da linha
+		 * Se circuloDaVez entre 1 e 3, verifica se cor já foi usada
+		 */ 
+		if(circuloDaVez < 4) {
+			c = (Circle) hBox.getChildren().get(circuloDaVez);
+			cor = (Color) ((Circle)me.getSource()).getFill();
+		}
+
+		if(circuloDaVez == 0) {
+			jogada.getLinha()[circuloDaVez++] = getCor(cor);
+			c.setFill(cor);
+		}
+		else if(circuloDaVez < 4 && circuloDaVez > 0) {
+			for(int i = 0; i < circuloDaVez; i++) {
+				if(getCor(cor).toString().equalsIgnoreCase(jogada.getLinha()[i].toString())) {
 					System.out.println("COR JÁ EXISTE");
 					System.out.println(getCor(cor).toString() + " igual a " + jogada.getLinha()[i].toString());
-				}
-				else {
-					jogada.getLinha()[circuloDaVez++] = getCor(cor);
-					c.setFill(cor);
+					return;
 				}
 			}
+			jogada.getLinha()[circuloDaVez++] = getCor(cor);
+			c.setFill(cor);
 		}
-		else circuloDaVez = 0;
-		
+
 	}
 
 
