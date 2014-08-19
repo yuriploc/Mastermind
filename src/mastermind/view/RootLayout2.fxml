@@ -13,7 +13,7 @@
    <center>
       <AnchorPane minWidth="200.0" prefHeight="485.0" prefWidth="180.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox fillHeight="false" prefHeight="22.0" prefWidth="200.0" spacing="10.0">
+            <HBox fx:id="linhaMaster" fillHeight="false" prefHeight="22.0" prefWidth="200.0" spacing="10.0">
                <children>
                   <Circle fill="LIGHTGRAY" radius="11.0" stroke="BLACK" strokeType="INSIDE" />
                   <Circle fill="LIGHTGRAY" radius="11.0" stroke="BLACK" strokeType="INSIDE" />

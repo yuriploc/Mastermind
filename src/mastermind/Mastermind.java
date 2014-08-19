@@ -58,8 +58,10 @@ public class Mastermind extends Application {
 		Handler.getHandler().enviaStr(nome);
 		//verifica se é o primeiro usuario a conectar e avisa ao controller
 		boolean first = Handler.getHandler().isFirstUser();
-		if(first)
+		if(first) 
 			GameController.setFirstUser();
+		
+		GameController.configMasterGame();
 		//TODO: ajeitar essa porra
 		@SuppressWarnings("rawtypes")
 		Task task = new Task() {

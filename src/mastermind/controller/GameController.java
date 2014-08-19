@@ -47,6 +47,9 @@ public class GameController {
 
 	@FXML
 	private VBox vBoxLinhasFeed;
+	
+	@FXML
+	private static HBox linhaMaster;
 
 	private int linhaEmJogo = 9;
 
@@ -73,7 +76,6 @@ public class GameController {
 		jogada = new Jogada();
 		feedDaVez = (FlowPane) vBoxLinhasFeed.getChildren().get(linhaEmJogo);
 		linhaDaVez = (HBox) vBoxLinhasCores.getChildren().get(linhaEmJogo);
-
 
 		btnEnviar.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -141,6 +143,7 @@ public class GameController {
 			}
 			
 		});
+		
 	}
 
 	@FXML
@@ -252,6 +255,10 @@ public class GameController {
 
 	public static void setFirstUser() {
 		firstUser = true;
+	}
+
+	public static void configMasterGame() {
+		//TODO: implementar o turno inicial etc.
 	}
 
 }
