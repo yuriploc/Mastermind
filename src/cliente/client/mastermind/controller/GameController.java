@@ -1,5 +1,9 @@
-package mastermind.controller;
+package client.mastermind.controller;
 
+import client.mastermind.common.Chat;
+import client.mastermind.common.Jogada;
+import client.mastermind.common.Jogada.Cores;
+import client.mastermind.connection.Handler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,10 +21,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
-import mastermind.common.Chat;
-import mastermind.common.Jogada;
-import mastermind.common.Jogada.Cores;
-import mastermind.connection.Handler;
 
 public class GameController {
 

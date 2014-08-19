@@ -1,13 +1,13 @@
-package mastermind.connection;
+package client.mastermind.connection;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import mastermind.common.Chat;
-import mastermind.common.Enviavel;
-import mastermind.common.Jogada;
+import client.mastermind.common.Chat;
+import client.mastermind.common.Enviavel;
+import client.mastermind.common.Jogada;
 
 public final class Handler {
 	private Socket socket;

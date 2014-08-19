@@ -1,4 +1,4 @@
-package mastermind.common;
+package client.mastermind.common;
 
 public interface Enviavel {
 

@@ -1,4 +1,4 @@
-package mastermind.common;
+package server.mastermind.common;
 
 import java.io.Serializable;
 

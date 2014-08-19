@@ -1,7 +1,12 @@
-package mastermind;
+package client.mastermind.principal;
 
 import java.io.IOException;
 
+import client.mastermind.common.Chat;
+import client.mastermind.common.Enviavel;
+import client.mastermind.common.Jogada;
+import client.mastermind.connection.Handler;
+import client.mastermind.controller.GameController;
 import javafx.application.Application;
 import javafx.concurrent.Task;
 import javafx.event.EventHandler;
@@ -11,11 +16,6 @@ import javafx.scene.control.Dialogs;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import mastermind.common.Chat;
-import mastermind.common.Enviavel;
-import mastermind.common.Jogada;
-import mastermind.connection.Handler;
-import mastermind.controller.GameController;
 
 public class Mastermind extends Application {
 	private Stage primaryStage;
